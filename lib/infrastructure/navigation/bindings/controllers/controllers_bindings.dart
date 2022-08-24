@@ -1,0 +1,1 @@
+export 'package:mail_tm/infrastructure/navigation/bindings/controllers/home.controller.binding.dart'; 
