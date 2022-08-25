@@ -25,7 +25,6 @@ void main() {
     IDomainRepository repository = DomainRepositoryBindings().repository;
     PaginationModel<String> pagination = await repository.getDomains();
     List<String> list = pagination.list;
-    // print(list);
     expect(list.isNotEmpty, true);
   });
 
@@ -50,18 +49,17 @@ void main() {
       }
     },
   );
+
   test(
     'SignIn user',
     () async {
       try {
         Initializer.testInit();
         IAccountRepository repository = AccountRepositoryBindings().repository;
-
         var dto = AccountDto(
           address: 's1hawon@arxxwalls.com',
           password: '123456',
         );
-
         String data = await repository.signIn(dto);
         print(data);
 
