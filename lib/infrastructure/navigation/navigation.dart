@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get_navigation/get_navigation.dart';
 
 import '../../config.dart';
@@ -29,8 +30,13 @@ class Nav {
   static List<GetPage> routes = [
     GetPage(
       name: Routes.HOME,
-      page: () => const HomeScreen(),
+      page: () => HomeScreen(),
       binding: HomeControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.LOGIN,
+      page: () => const LoginScreen(),
+      binding: LoginControllerBinding(),
     ),
   ];
 }

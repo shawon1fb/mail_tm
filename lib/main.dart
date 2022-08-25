@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 
 import 'infrastructure/navigation/navigation.dart';
 import 'infrastructure/navigation/routes.dart';
+import 'infrastructure/theme/thems.dart';
 import 'initializer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Initializer.init();
   var initialRoute = await Routes.initialRoute;
 
@@ -29,6 +29,7 @@ class Main extends StatelessWidget {
         textDirection: TextDirection.ltr,
         child: GetMaterialApp(
           textDirection: TextDirection.ltr,
+          theme: LoginDesign5Theme.lightThemeData,
           fallbackLocale: const Locale('en', 'US'),
           debugShowCheckedModeBanner: false,
           initialRoute: initialRoute,
@@ -39,7 +40,7 @@ class Main extends StatelessWidget {
           builder: (context, Widget? widget) {
             // ScreenUtil.setContext(context);
 
-            return widget ?? SizedBox();
+            return widget ?? const SizedBox();
           },
         ),
       ),
@@ -60,6 +61,4 @@ class InitialController extends GetxController {
     // TODO: implement onInit
     super.onInit();
   }
-
-
 }
