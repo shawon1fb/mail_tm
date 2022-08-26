@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import '../../domain/core/exceptions/forbidden.exception.dart';
+import '../../infrastructure/dal/services/accounts/dto/account.dto.dart';
 import '../../infrastructure/navigation/routes.dart';
 import '../../values/values.dart';
 import '../shared/buttons/animated_button_widget.dart';
@@ -197,8 +200,13 @@ class LoginScreen extends GetView<LoginController> {
             height: heightOfScreen * 0.04,
           ),
           InkWell(
-            onTap: () {
-              Get.toNamed(Routes.SIGN_UP);
+            onTap: () async {
+              var content = await Get.toNamed(Routes.SIGN_UP);
+              if (content != null) {
+                Map dto = json.decode(content);
+                addressController.text = dto['address'];
+                passwordController.text = dto['password'];
+              }
             },
             child: RichText(
               text: TextSpan(

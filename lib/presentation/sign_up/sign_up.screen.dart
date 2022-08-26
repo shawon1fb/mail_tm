@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../../domain/core/exceptions/unprocessable.entity.exception.dart';
+import '../../infrastructure/dal/services/accounts/dto/account.dto.dart';
 import '../../values/values.dart';
 import '../shared/buttons/animated_button_widget.dart';
 import '../shared/widgets/custom_button.dart';
@@ -120,7 +122,7 @@ class SignUpScreen extends GetView<SignUpController> {
           height: 25,
           child: GetX<DomainController>(
             builder: (logic) {
-              if(logic.domainNames.isEmpty){
+              if (logic.domainNames.isEmpty) {
                 return const Text('loading domain names . . .');
               }
               return Container(
@@ -157,6 +159,7 @@ class SignUpScreen extends GetView<SignUpController> {
                 nextNode: passwordNode,
                 hasTitle: true,
                 title: 'Username',
+
                 titleStyle: theme.textTheme.subtitle1?.copyWith(
                   color: AppColors.deepDarkGreen,
                   fontSize: Sizes.TEXT_SIZE_14,
@@ -176,12 +179,15 @@ class SignUpScreen extends GetView<SignUpController> {
                   color: AppColors.blackShade10,
                 ),
                 hintText: 'name',
+                // validator: (v) =>
+                //     (v?.isEmpty ?? true) ? 'username can not be empty' : null,
               ),
               const SpaceH16(),
               CustomTextFormField(
                 hasTitle: true,
                 focusNode: passwordNode,
                 title: StringConst.PASSWORD,
+                controller: passwordController,
                 titleStyle: theme.textTheme.subtitle1?.copyWith(
                   color: AppColors.deepDarkGreen,
                   fontSize: Sizes.TEXT_SIZE_14,
@@ -201,6 +207,8 @@ class SignUpScreen extends GetView<SignUpController> {
                 ),
                 hintText: StringConst.PASSWORD_HINT_TEXT,
                 obscured: true,
+                validator: (v) =>
+                    (((v?.length ?? 0) < 6)) ? 'password too small' : null,
               ),
             ],
           ),
@@ -208,31 +216,69 @@ class SignUpScreen extends GetView<SignUpController> {
         const SpaceH16(),
         SizedBox(
           width: widthOfScreen * 0.6,
-          child: AnimatedButton(
-            text: StringConst.SIGN_UP_2,
-            backgroundColor: AppColors.deepLimeGreen,
-            textStyle: theme.textTheme.button?.copyWith(
-              color: AppColors.white,
-              fontWeight: FontWeight.w700,
-              fontSize: Sizes.TEXT_SIZE_16,
-            ),
-            preAnimationCallback: () {
-              FocusScopeNode currentFocus = FocusScope.of(context);
-              if (!currentFocus.hasPrimaryFocus) {
-                currentFocus.unfocus();
-              }
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Processing Data')),
-              );
-            },
-            onTap: () {
-              if (domainNameController.text.isEmpty) {
+          child: Center(
+            child: AnimatedButton(
+              text: StringConst.SIGN_UP_2,
+              backgroundColor: AppColors.deepLimeGreen,
+              textStyle: theme.textTheme.button?.copyWith(
+                color: AppColors.white,
+                fontWeight: FontWeight.w700,
+                fontSize: Sizes.TEXT_SIZE_16,
+              ),
+              preAnimationCallback: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('please select a domain name')),
+                  const SnackBar(content: Text('Processing Data')),
                 );
-                return;
-              }
-            },
+              },
+              onTap: () async {
+                if (domainNameController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('please select a domain name')),
+                  );
+                  return;
+                }
+
+                  try {
+
+                    if (_formKey.currentState!.validate()) {
+                      print('validate alll result');
+                      AccountDto dto = AccountDto(
+                        address: '${userNameController.text.trim()}@${domainNameController.text.trim()}',
+                        password: passwordController.text,
+                      );
+
+                      await controller.signUpMethod(dto: dto);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Signup Successful')),
+                      );
+                      Get.back<String>(result: dto.toString());
+                    }
+                  } on UbProcessAbleEntityException catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(e.message),
+                      ),
+                    );
+                  } catch (e, t) {
+                    debugPrint(e.toString());
+                    debugPrint(t.toString());
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(e.toString()),
+                      ),
+                    );
+                  }
+
+
+
+              },
+            ),
           ),
         ),
       ],

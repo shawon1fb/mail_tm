@@ -84,6 +84,7 @@ class CustomTextFormField extends StatelessWidget {
           height: height,
           margin: textFormFieldMargin,
           child: TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             controller: controller,
             focusNode: focusNode,
             onFieldSubmitted: (v) {

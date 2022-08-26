@@ -1,23 +1,23 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../../domain/core/models/user.data.model.dart';
+import '../../../domain/repository/usecases/account.repository.interface.dart';
+import '../../../infrastructure/dal/services/accounts/dto/account.dto.dart';
+
 class SignUpController extends GetxController {
-  //TODO: Implement SignUpController
-  SignUpController();
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  final IAccountRepository _accountRepository;
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  SignUpController({required IAccountRepository accountRepository})
+      : _accountRepository = accountRepository;
 
-  @override
-  void onClose() {
-    super.onClose();
+  Future<void> signUpMethod({required AccountDto dto}) async {
+    try {
+      print(dto.toString());
+      UserData user = await _accountRepository.createAccount(dto);
+      debugPrint(user.toString());
+    } catch (e) {
+      rethrow;
+    }
   }
-
-  void increment() => count.value++;
 }
