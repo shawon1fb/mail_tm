@@ -334,9 +334,11 @@ packages:
   pull_to_refresh:
     dependency: "direct main"
     description:
-      name: pull_to_refresh
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "01147933180d1ad5e6a3b6f57a2e91be0c11d2b0"
+      url: "https://github.com/ymback/flutter_pulltorefresh.git"
+    source: git
     version: "2.0.0"
   sky_engine:
     dependency: transitive

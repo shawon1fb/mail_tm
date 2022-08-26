@@ -57,6 +57,7 @@ class InitialBindings extends Bindings {
   void dependencies() {
     Get.put<InitialController>(InitialController());
     LoginControllerBinding().dependencies();
+
   }
 }
 
