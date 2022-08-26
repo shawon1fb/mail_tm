@@ -160,18 +160,21 @@ class LoginScreen extends GetView<LoginController> {
                   if (!currentFocus.hasPrimaryFocus) {
                     currentFocus.unfocus();
                   }
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Processing Data')),
+                  );
                 },
                 onTap: () async {
                   try {
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
                       await controller.loginMethod(
                         address: addressController.text.trim(),
                         password: passwordController.text,
                       );
 
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Login Success')),
+                      );
                       Get.offAllNamed(Routes.HOME);
                     }
                   } on ForbiddenException catch (e) {
