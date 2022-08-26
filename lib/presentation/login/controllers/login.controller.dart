@@ -1,23 +1,27 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../../domain/repository/usecases/account.repository.interface.dart';
+import '../../../infrastructure/dal/services/accounts/dto/account.dto.dart';
+
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
+  final IAccountRepository _accountRepository;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  LoginController({required IAccountRepository accountRepository})
+      : _accountRepository = accountRepository;
+
+  Future<void> loginMethod(
+      {required String address, required String password}) async {
+    try {
+      AccountDto dto = AccountDto(address: address, password: password);
+      String token = await _accountRepository.signIn(dto);
+      debugPrint(token);
+
+      ///save token to local storage
+
+    } catch (e, t) {
+      debugPrint(e.toString());
+      debugPrint(t.toString());
+    }
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

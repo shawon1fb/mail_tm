@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../infrastructure/navigation/routes.dart';
 import '../../values/values.dart';
+import '../shared/buttons/animated_button_widget.dart';
 import '../shared/widgets/custom_button.dart';
 import '../shared/widgets/custom_shape_clippers.dart';
 import '../shared/widgets/custom_text_form_field.dart';
@@ -11,7 +12,16 @@ import '../shared/widgets/spaces.dart';
 import 'controllers/login.controller.dart';
 
 class LoginScreen extends GetView<LoginController> {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
+
+  final FocusNode addressNode = FocusNode();
+  final FocusNode passwordNode = FocusNode();
+  final TextEditingController addressController =
+      TextEditingController(text: 'shawon@arxxwalls.com');
+  final TextEditingController passwordController =
+      TextEditingController(text: '123456');
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -77,99 +87,109 @@ class LoginScreen extends GetView<LoginController> {
     ThemeData theme = Theme.of(context);
     var widthOfScreen = MediaQuery.of(context).size.width;
     var heightOfScreen = MediaQuery.of(context).size.height;
-    return Column(
-      children: <Widget>[
-        CustomTextFormField(
-          hasTitle: true,
-          title: StringConst.EMAIL_2,
-          titleStyle: theme.textTheme.subtitle1?.copyWith(
-            color: AppColors.deepDarkGreen,
-            fontSize: Sizes.TEXT_SIZE_14,
-          ),
-          textInputType: TextInputType.text,
-          hintTextStyle: Styles.customTextStyle(
-            color: AppColors.greyShade7,
-          ),
-          enabledBorder: Borders.customUnderlineInputBorder(
-            color: AppColors.lighterBlue2,
-          ),
-          focusedBorder: Borders.customUnderlineInputBorder(
-            color: AppColors.lightGreenShade1,
-          ),
-          textStyle: Styles.customTextStyle(
-            color: AppColors.blackShade10,
-          ),
-          hintText: StringConst.EMAIL_HINT_TEXT,
-        ),
-        const SpaceH16(),
-        CustomTextFormField(
-          hasTitle: true,
-          title: StringConst.PASSWORD,
-          titleStyle: theme.textTheme.subtitle1?.copyWith(
-            color: AppColors.deepDarkGreen,
-            fontSize: Sizes.TEXT_SIZE_14,
-          ),
-          textInputType: TextInputType.text,
-          hintTextStyle: Styles.customTextStyle(
-            color: AppColors.greyShade7,
-          ),
-          enabledBorder: Borders.customUnderlineInputBorder(
-            color: AppColors.lighterBlue2,
-          ),
-          focusedBorder: Borders.customUnderlineInputBorder(
-            color: AppColors.lightGreenShade1,
-          ),
-          textStyle: Styles.customTextStyle(
-            color: AppColors.blackShade10,
-          ),
-          hintText: StringConst.PASSWORD_HINT_TEXT,
-          obscured: true,
-        ),
-        const SpaceH20(),
-        SizedBox(
-          width: widthOfScreen * 0.6,
-          child: CustomButton(
-            title: StringConst.LOG_IN_4,
-            color: AppColors.deepLimeGreen,
-            textStyle: theme.textTheme.button?.copyWith(
-              color: AppColors.white,
-              fontWeight: FontWeight.w700,
-              fontSize: Sizes.TEXT_SIZE_16,
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: <Widget>[
+          CustomTextFormField(
+            hasTitle: true,
+            focusNode: addressNode,
+            nextNode: passwordNode,
+            controller: addressController,
+            title: StringConst.ADDRESS,
+            titleStyle: theme.textTheme.subtitle1?.copyWith(
+              color: AppColors.deepDarkGreen,
+              fontSize: Sizes.TEXT_SIZE_14,
             ),
-            onPressed: () {},
+            textInputType: TextInputType.text,
+            hintTextStyle: Styles.customTextStyle(
+              color: AppColors.greyShade7,
+            ),
+            enabledBorder: Borders.customUnderlineInputBorder(
+              color: AppColors.lighterBlue2,
+            ),
+            focusedBorder: Borders.customUnderlineInputBorder(
+              color: AppColors.lightGreenShade1,
+            ),
+            textStyle: Styles.customTextStyle(
+              color: AppColors.blackShade10,
+            ),
+            hintText: StringConst.EMAIL_HINT_TEXT,
           ),
-        ),
-        SizedBox(
-          height: heightOfScreen * 0.04,
-        ),
-        InkWell(
-          onTap: () {
-            Get.toNamed(Routes.SIGN_UP);
-          },
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: StringConst.DONT_HAVE_AN_ACCOUNT,
-                  style: theme.textTheme.bodyText1?.copyWith(
-                    color: AppColors.black,
-                    fontSize: Sizes.TEXT_SIZE_16,
-                  ),
+          const SpaceH16(),
+          CustomTextFormField(
+            hasTitle: true,
+            focusNode: passwordNode,
+            controller: passwordController,
+            title: StringConst.PASSWORD,
+            titleStyle: theme.textTheme.subtitle1?.copyWith(
+              color: AppColors.deepDarkGreen,
+              fontSize: Sizes.TEXT_SIZE_14,
+            ),
+            textInputType: TextInputType.text,
+            hintTextStyle: Styles.customTextStyle(
+              color: AppColors.greyShade7,
+            ),
+            enabledBorder: Borders.customUnderlineInputBorder(
+              color: AppColors.lighterBlue2,
+            ),
+            focusedBorder: Borders.customUnderlineInputBorder(
+              color: AppColors.lightGreenShade1,
+            ),
+            textStyle: Styles.customTextStyle(
+              color: AppColors.blackShade10,
+            ),
+            hintText: StringConst.PASSWORD_HINT_TEXT,
+            obscured: true,
+          ),
+          const SpaceH20(),
+          SizedBox(
+            width: widthOfScreen * 0.6,
+            child: Center(
+              child: AnimatedButton(
+                text: StringConst.LOG_IN_4,
+                backgroundColor: AppColors.deepLimeGreen,
+                textStyle: theme.textTheme.button?.copyWith(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: Sizes.TEXT_SIZE_16,
                 ),
-                TextSpan(
-                  text: StringConst.SIGN_UP,
-                  style: theme.textTheme.subtitle2?.copyWith(
-                    color: AppColors.deepDarkGreen,
-                    fontSize: Sizes.TEXT_SIZE_16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+                onTap: () {},
+              ),
             ),
           ),
-        ),
-        const SpaceH16(),
-      ],
+          SizedBox(
+            height: heightOfScreen * 0.04,
+          ),
+          InkWell(
+            onTap: () {
+              Get.toNamed(Routes.SIGN_UP);
+            },
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: StringConst.DONT_HAVE_AN_ACCOUNT,
+                    style: theme.textTheme.bodyText1?.copyWith(
+                      color: AppColors.black,
+                      fontSize: Sizes.TEXT_SIZE_16,
+                    ),
+                  ),
+                  TextSpan(
+                    text: StringConst.SIGN_UP,
+                    style: theme.textTheme.subtitle2?.copyWith(
+                      color: AppColors.deepDarkGreen,
+                      fontSize: Sizes.TEXT_SIZE_16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SpaceH16(),
+        ],
+      ),
     );
   }
 }

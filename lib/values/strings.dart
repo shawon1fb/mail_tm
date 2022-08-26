@@ -46,6 +46,7 @@ class StringConst {
   static const String EMAIL_ADDRESS = 'Email Address';
   static const String EMAIL = 'EMAIL';
   static const String EMAIL_2 = 'Email';
+  static const String ADDRESS = 'Address';
   static const String PASSWORD = 'Password';
   static const String PASSWORD_2 = 'PASSWORD';
   static const String CONFIRM_PASSWORD = 'Confirm Password';

@@ -30,9 +30,15 @@ class CustomTextFormField extends StatelessWidget {
   final double? height;
   final EdgeInsetsGeometry? contentPadding;
   final EdgeInsetsGeometry? textFormFieldMargin;
+  final FocusNode? focusNode;
+  final FocusNode? nextNode;
+  final TextEditingController? controller;
 
   const CustomTextFormField({
     Key? key,
+    this.focusNode,
+    this.controller,
+    this.nextNode,
     this.prefixIcon,
     this.suffixIcon,
     this.textStyle,
@@ -78,6 +84,12 @@ class CustomTextFormField extends StatelessWidget {
           height: height,
           margin: textFormFieldMargin,
           child: TextFormField(
+            controller: controller,
+            focusNode: focusNode,
+            onFieldSubmitted: (v) {
+              focusNode?.unfocus();
+              nextNode?.requestFocus();
+            },
             style: textStyle,
             keyboardType: textInputType,
             onChanged: onChanged,
