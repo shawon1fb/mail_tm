@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../domain/core/models/messages.data.model.dart';
 import '../../values/values.dart';
+import '../shared/buttons/animated_next_button.dart';
 import '../shared/no_internet_widget/no_internet_widget.dart';
 import '../shared/scroll/refress_scroll.dart';
 import '../shared/widgets/custom_shape_clippers.dart';
@@ -15,6 +16,7 @@ class HomeScreen extends GetView<HomeController> {
   HomeScreen({Key? key}) : super(key: key);
 
   final ScrollController scrollController = ScrollController();
+  final NextButtonController buttonController = NextButtonController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,25 @@ class HomeScreen extends GetView<HomeController> {
         ],
       ),
       backgroundColor: const Color(0xff256D85),
+      floatingActionButton: SizedBox(
+        height: 80,
+        width: 80,
+        child: Center(
+          child: AnimatedNextButton(
+           iconData: Icons.refresh,
+            color: AppColors.lightBlueShade2,
+            onTap: () async {
+              buttonController.startAnimation();
+              await 1.seconds.delay();
+              await controller.refreshMessages();
+
+              buttonController.stopAnimation();
+              // Get.toNamed(Routes.BIRTH_DAY_SCREEN);
+            },
+            controller: buttonController,
+          ),
+        ),
+      ),
       body: NoInternetWidget(
         connectionCallback: () {
           controller.refreshMessages();
