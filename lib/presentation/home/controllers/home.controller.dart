@@ -3,13 +3,19 @@ import 'package:get/get.dart';
 
 import '../../../domain/core/models/messages.data.model.dart';
 import '../../../domain/core/pagination/pagination_model.dart';
+import '../../../domain/repository/usecases/app.data.repository.interface.dart';
 import '../../../domain/repository/usecases/message.repository.interface.dart';
+import '../../../infrastructure/navigation/routes.dart';
 
 class HomeController extends GetxController {
   final IMessageRepository _messageRepository;
+  final IAppDataRepository _appDataRepository;
 
-  HomeController({required IMessageRepository messageRepository})
-      : _messageRepository = messageRepository;
+  HomeController(
+      {required IMessageRepository messageRepository,
+      required IAppDataRepository appDataRepository})
+      : _messageRepository = messageRepository,
+        _appDataRepository = appDataRepository;
 
   @override
   void onInit() {
@@ -48,4 +54,13 @@ class HomeController extends GetxController {
   }
 
   List<MessageDataModel> messages = <MessageDataModel>[];
+
+  Future<void> logoutMethod() async {
+    try {
+      await _appDataRepository.clearJwtToken();
+      Get.offAllNamed(Routes.LOGIN);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 }

@@ -25,6 +25,20 @@ class HomeScreen extends GetView<HomeController> {
           'Messages',
           style: TextStyle(color: Colors.white),
         ),
+        actions: [
+          Center(
+            child: InkWell(
+              onTap: () {
+                controller.logoutMethod();
+              },
+              child: Text(
+                'logout'.toUpperCase(),
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          20.horizontalSpace,
+        ],
       ),
       backgroundColor: const Color(0xff256D85),
       body: SafeArea(
