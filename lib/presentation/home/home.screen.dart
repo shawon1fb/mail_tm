@@ -13,8 +13,6 @@ import 'controllers/home.controller.dart';
 class HomeScreen extends GetView<HomeController> {
   HomeScreen({Key? key}) : super(key: key);
 
-  // bool onCheck = false;
-
   final ScrollController scrollController = ScrollController();
 
   @override
