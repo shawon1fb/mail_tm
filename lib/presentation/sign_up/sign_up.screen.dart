@@ -8,6 +8,7 @@ import '../../domain/core/exceptions/unprocessable.entity.exception.dart';
 import '../../infrastructure/dal/services/accounts/dto/account.dto.dart';
 import '../../values/values.dart';
 import '../shared/buttons/animated_button_widget.dart';
+import '../shared/no_internet_widget/no_internet_widget.dart';
 import '../shared/widgets/custom_button.dart';
 import '../shared/widgets/custom_shape_clippers.dart';
 import '../shared/widgets/custom_text_form_field.dart';
@@ -35,81 +36,88 @@ class SignUpScreen extends GetView<SignUpController> {
     ThemeData theme = Theme.of(context);
 
     return Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              child: ClipPath(
-                clipper: WaveShapeClipper(),
-                child: Container(
-                  height: heightOfScreen * 0.5,
-                  width: widthOfScreen,
-                  decoration: const BoxDecoration(
-                    gradient: Gradients.curvesGradient3,
-                  ),
-                ),
-              ),
-            ),
-            ListView(
-              padding: const EdgeInsets.all(Sizes.PADDING_0),
-              shrinkWrap: true,
+      body: GetBuilder<DomainController>(builder: (dLogic) {
+        return NoInternetWidget(
+          connectionCallback: () {
+            dLogic.getDomainsName();
+          },
+          child: GestureDetector(
+            onTap: () {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
+              }
+            },
+            child: Stack(
               children: <Widget>[
-                SizedBox(
-                  height: heightOfScreen * 0.5 * 0.6,
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: widthOfScreen * 0.15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        StringConst.SIGN,
-                        style: theme.textTheme.headline3?.copyWith(
-                          color: AppColors.deepBrown,
-                        ),
+                Positioned(
+                  child: ClipPath(
+                    clipper: WaveShapeClipper(),
+                    child: Container(
+                      height: heightOfScreen * 0.5,
+                      width: widthOfScreen,
+                      decoration: const BoxDecoration(
+                        gradient: Gradients.curvesGradient3,
                       ),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Sig',
-                              style: theme.textTheme.headline3?.copyWith(
-                                color: Colors.transparent,
-                                height: 0.7,
-                              ),
-                            ),
-                            TextSpan(
-                              text: StringConst.UP,
-                              style: theme.textTheme.headline3?.copyWith(
-                                color: AppColors.deepBrown,
-                                height: 0.7,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-                SizedBox(
-                  height: heightOfScreen * 0.05,
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: Sizes.MARGIN_20),
-                  child: _buildForm(context),
+                ListView(
+                  padding: const EdgeInsets.all(Sizes.PADDING_0),
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    SizedBox(
+                      height: heightOfScreen * 0.5 * 0.6,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: widthOfScreen * 0.15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            StringConst.SIGN,
+                            style: theme.textTheme.headline3?.copyWith(
+                              color: AppColors.deepBrown,
+                            ),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Sig',
+                                  style: theme.textTheme.headline3?.copyWith(
+                                    color: Colors.transparent,
+                                    height: 0.7,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: StringConst.UP,
+                                  style: theme.textTheme.headline3?.copyWith(
+                                    color: AppColors.deepBrown,
+                                    height: 0.7,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: heightOfScreen * 0.05,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: Sizes.MARGIN_20),
+                      child: _buildForm(context),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }),
     );
   }
 
@@ -243,40 +251,37 @@ class SignUpScreen extends GetView<SignUpController> {
                   return;
                 }
 
-                  try {
-
-                    if (_formKey.currentState!.validate()) {
-                      print('validate alll result');
-                      AccountDto dto = AccountDto(
-                        address: '${userNameController.text.trim()}@${domainNameController.text.trim()}',
-                        password: passwordController.text,
-                      );
-
-                      await controller.signUpMethod(dto: dto);
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Signup Successful')),
-                      );
-                      Get.back<String>(result: dto.toString());
-                    }
-                  } on UbProcessAbleEntityException catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(e.message),
-                      ),
+                try {
+                  if (_formKey.currentState!.validate()) {
+                    print('validate alll result');
+                    AccountDto dto = AccountDto(
+                      address:
+                          '${userNameController.text.trim()}@${domainNameController.text.trim()}',
+                      password: passwordController.text,
                     );
-                  } catch (e, t) {
-                    debugPrint(e.toString());
-                    debugPrint(t.toString());
+
+                    await controller.signUpMethod(dto: dto);
+
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(e.toString()),
-                      ),
+                      const SnackBar(content: Text('Signup Successful')),
                     );
+                    Get.back<String>(result: dto.toString());
                   }
-
-
-
+                } on UbProcessAbleEntityException catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(e.message),
+                    ),
+                  );
+                } catch (e, t) {
+                  debugPrint(e.toString());
+                  debugPrint(t.toString());
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(e.toString()),
+                    ),
+                  );
+                }
               },
             ),
           ),

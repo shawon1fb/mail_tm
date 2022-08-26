@@ -9,6 +9,7 @@ import '../../infrastructure/dal/services/accounts/dto/account.dto.dart';
 import '../../infrastructure/navigation/routes.dart';
 import '../../values/values.dart';
 import '../shared/buttons/animated_button_widget.dart';
+import '../shared/no_internet_widget/no_internet_widget.dart';
 import '../shared/widgets/custom_button.dart';
 import '../shared/widgets/custom_shape_clippers.dart';
 import '../shared/widgets/custom_text_form_field.dart';
@@ -34,54 +35,56 @@ class LoginScreen extends GetView<LoginController> {
     ThemeData theme = Theme.of(context);
 
     return Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              child: ClipPath(
-                clipper: ReverseWaveShapeClipper(),
-                child: Container(
-                  height: heightOfScreen * 0.5,
-                  width: widthOfScreen,
-                  decoration: const BoxDecoration(
-                    gradient: Gradients.curvesGradient3,
-                  ),
-                ),
-              ),
-            ),
-            ListView(
-              padding: const EdgeInsets.all(Sizes.PADDING_0),
-              shrinkWrap: true,
-              children: <Widget>[
-                SizedBox(
-                  height: heightOfScreen * 0.5 * 0.90,
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: widthOfScreen * 0.15),
-                  child: Text(
-                    StringConst.LOG_IN,
-                    style: theme.textTheme.headline3?.copyWith(
-                      color: AppColors.deepBrown,
+      body: NoInternetWidget(
+        child: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                child: ClipPath(
+                  clipper: ReverseWaveShapeClipper(),
+                  child: Container(
+                    height: heightOfScreen * 0.5,
+                    width: widthOfScreen,
+                    decoration: const BoxDecoration(
+                      gradient: Gradients.curvesGradient3,
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: heightOfScreen * 0.05,
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: Sizes.MARGIN_20),
-                  child: _buildForm(context),
-                ),
-              ],
-            ),
-          ],
+              ),
+              ListView(
+                padding: const EdgeInsets.all(Sizes.PADDING_0),
+                shrinkWrap: true,
+                children: <Widget>[
+                  SizedBox(
+                    height: heightOfScreen * 0.5 * 0.90,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: widthOfScreen * 0.15),
+                    child: Text(
+                      StringConst.LOG_IN,
+                      style: theme.textTheme.headline3?.copyWith(
+                        color: AppColors.deepBrown,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: heightOfScreen * 0.05,
+                  ),
+                  Container(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: Sizes.MARGIN_20),
+                    child: _buildForm(context),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
