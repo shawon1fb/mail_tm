@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'infrastructure/navigation/routes.dart';
 import 'presentation/shared/no_internet_widget/no_internet_controller.dart';
 
 import 'config.dart';
@@ -46,19 +47,22 @@ class Initializer {
 
     connect.httpClient.addResponseModifier(
       (request, response) async {
-        // debugPrint('request:=> ${request.url}');
-        // debugPrint('status:=> ${response.statusCode}');
-        //
-        // try {
-        //   Map<String, dynamic> j = json.decode(response.bodyString ?? '');
-        //   String res = const JsonEncoder.withIndent('  ').convert(j);
-        //
-        //   debugPrint('');
-        //   debugPrint('response $res');
-        // } catch (e) {
-        //   debugPrint('error GetConnect:=> ${e.toString()}');
-        //   debugPrint('error GetConnect:=> ${response.bodyString}');
-        // }
+        debugPrint('request:=> ${request.url}');
+        debugPrint('status:=> ${response.statusCode}');
+
+        try {
+          Map<String, dynamic> j = json.decode(response.bodyString ?? '');
+          String res = const JsonEncoder.withIndent('  ').convert(j);
+
+          debugPrint('');
+          debugPrint('response $res');
+        } catch (e) {
+          debugPrint('error GetConnect:=> ${e.toString()}');
+          debugPrint('error GetConnect:=> ${response.bodyString}');
+        }
+        if (response.statusCode == 401) {
+          Get.offAllNamed(Routes.LOGIN);
+        }
 
         return response;
       },

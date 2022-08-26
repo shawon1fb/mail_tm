@@ -15,6 +15,11 @@ class Storage implements IStorage {
   }
 
   @override
+  Future<void> delete<T>(String key) async {
+    return _storage.remove(key);
+  }
+
+  @override
   Future<void> write({required String key, required value}) async {
     await _storage.write(key, value);
   }
