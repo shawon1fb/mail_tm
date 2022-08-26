@@ -206,7 +206,7 @@ class SignUpScreen extends GetView<SignUpController> {
                   color: AppColors.blackShade10,
                 ),
                 hintText: StringConst.PASSWORD_HINT_TEXT,
-                obscured: true,
+                obscured: false,
                 validator: (v) =>
                     (((v?.length ?? 0) < 6)) ? 'password too small' : null,
               ),
