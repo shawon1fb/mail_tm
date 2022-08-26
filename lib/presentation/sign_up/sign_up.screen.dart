@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../values/values.dart';
+import '../shared/buttons/animated_button_widget.dart';
 import '../shared/widgets/custom_button.dart';
 import '../shared/widgets/custom_shape_clippers.dart';
 import '../shared/widgets/custom_text_form_field.dart';
 import '../shared/widgets/spaces.dart';
+import 'cards/domain_name_card.dart';
+import 'controllers/doman.controller.dart';
 import 'controllers/sign_up.controller.dart';
 
 class SignUpScreen extends GetView<SignUpController> {
   SignUpScreen({Key? key}) : super(key: key);
   final RxBool onCheck = false.obs;
+
+  final TextEditingController domainNameController = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  final FocusNode userNameNode = FocusNode();
+  final FocusNode passwordNode = FocusNode();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -103,97 +116,123 @@ class SignUpScreen extends GetView<SignUpController> {
     var widthOfScreen = MediaQuery.of(context).size.width;
     return Column(
       children: <Widget>[
-        CustomTextFormField(
-          hasTitle: true,
-          title: StringConst.EMAIL_2,
-          titleStyle: theme.textTheme.subtitle1?.copyWith(
-            color: AppColors.deepDarkGreen,
-            fontSize: Sizes.TEXT_SIZE_14,
-          ),
-          textInputType: TextInputType.text,
-          hintTextStyle: Styles.customTextStyle(
-            color: AppColors.greyShade7,
-          ),
-          enabledBorder: Borders.customUnderlineInputBorder(
-            color: AppColors.lighterBlue2,
-          ),
-          focusedBorder: Borders.customUnderlineInputBorder(
-            color: AppColors.lightGreenShade1,
-          ),
-          textStyle: Styles.customTextStyle(
-            color: AppColors.blackShade10,
-          ),
-          hintText: StringConst.EMAIL_HINT_TEXT,
-        ),
-        const SpaceH16(),
-        CustomTextFormField(
-          hasTitle: true,
-          title: StringConst.PASSWORD,
-          titleStyle: theme.textTheme.subtitle1?.copyWith(
-            color: AppColors.deepDarkGreen,
-            fontSize: Sizes.TEXT_SIZE_14,
-          ),
-          textInputType: TextInputType.text,
-          hintTextStyle: Styles.customTextStyle(
-            color: AppColors.greyShade7,
-          ),
-          enabledBorder: Borders.customUnderlineInputBorder(
-            color: AppColors.lighterBlue2,
-          ),
-          focusedBorder: Borders.customUnderlineInputBorder(
-            color: AppColors.lightGreenShade1,
-          ),
-          textStyle: Styles.customTextStyle(
-            color: AppColors.blackShade10,
-          ),
-          hintText: StringConst.PASSWORD_HINT_TEXT,
-          obscured: true,
-        ),
-        const SpaceH16(),
-        CustomTextFormField(
-          hasTitle: true,
-          title: StringConst.CONFIRM_PASSWORD,
-          titleStyle: theme.textTheme.subtitle1?.copyWith(
-            color: AppColors.deepDarkGreen,
-            fontSize: Sizes.TEXT_SIZE_14,
-          ),
-          textInputType: TextInputType.text,
-          hintTextStyle: Styles.customTextStyle(color: AppColors.greyShade7),
-          enabledBorder: Borders.customUnderlineInputBorder(
-            color: AppColors.lighterBlue2,
-          ),
-          focusedBorder: Borders.customUnderlineInputBorder(
-            color: AppColors.lightGreenShade1,
-          ),
-          textStyle: Styles.customTextStyle(color: AppColors.blackShade10),
-          hintText: StringConst.PASSWORD_HINT_TEXT,
-          obscured: true,
-        ),
-        Row(
-          children: <Widget>[
-            Obx(() {
-              return Checkbox(
-                value: onCheck.value,
-                activeColor: AppColors.deepLimeGreen,
-                onChanged: (value) {
-                  onCheck.value = !onCheck.value;
-                },
+        SizedBox(
+          height: 25,
+          child: GetX<DomainController>(
+            builder: (logic) {
+              if(logic.domainNames.isEmpty){
+                return const Text('loading domain names . . .');
+              }
+              return Container(
+                width: 1.sw,
+                alignment: Alignment.center,
+                child: ListView.builder(
+                  itemCount: logic.domainNames.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (_, i) {
+                    var name = logic.domainNames[i];
+                    return DomainNameCard(
+                      name: name,
+                      isSelected: logic.selectedIndex.value == i,
+                      onTap: () {
+                        print('Click');
+                        logic.selectedIndex.value = i;
+                        domainNameController.text = logic.domainNames[i];
+                        userNameNode.requestFocus();
+                      },
+                    );
+                  },
+                ),
               );
-            }),
-            const Text(StringConst.ACCEPT_CONDITIONS)
-          ],
+            },
+          ),
         ),
+        20.verticalSpace,
+        Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              CustomTextFormField(
+                focusNode: userNameNode,
+                nextNode: passwordNode,
+                hasTitle: true,
+                title: 'Username',
+                titleStyle: theme.textTheme.subtitle1?.copyWith(
+                  color: AppColors.deepDarkGreen,
+                  fontSize: Sizes.TEXT_SIZE_14,
+                ),
+                controller: userNameController,
+                textInputType: TextInputType.text,
+                hintTextStyle: Styles.customTextStyle(
+                  color: AppColors.greyShade7,
+                ),
+                enabledBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.lighterBlue2,
+                ),
+                focusedBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.lightGreenShade1,
+                ),
+                textStyle: Styles.customTextStyle(
+                  color: AppColors.blackShade10,
+                ),
+                hintText: 'name',
+              ),
+              const SpaceH16(),
+              CustomTextFormField(
+                hasTitle: true,
+                focusNode: passwordNode,
+                title: StringConst.PASSWORD,
+                titleStyle: theme.textTheme.subtitle1?.copyWith(
+                  color: AppColors.deepDarkGreen,
+                  fontSize: Sizes.TEXT_SIZE_14,
+                ),
+                textInputType: TextInputType.text,
+                hintTextStyle: Styles.customTextStyle(
+                  color: AppColors.greyShade7,
+                ),
+                enabledBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.lighterBlue2,
+                ),
+                focusedBorder: Borders.customUnderlineInputBorder(
+                  color: AppColors.lightGreenShade1,
+                ),
+                textStyle: Styles.customTextStyle(
+                  color: AppColors.blackShade10,
+                ),
+                hintText: StringConst.PASSWORD_HINT_TEXT,
+                obscured: true,
+              ),
+            ],
+          ),
+        ),
+        const SpaceH16(),
         SizedBox(
           width: widthOfScreen * 0.6,
-          child: CustomButton(
-            title: StringConst.SIGN_UP_2,
-            color: AppColors.deepLimeGreen,
+          child: AnimatedButton(
+            text: StringConst.SIGN_UP_2,
+            backgroundColor: AppColors.deepLimeGreen,
             textStyle: theme.textTheme.button?.copyWith(
               color: AppColors.white,
               fontWeight: FontWeight.w700,
               fontSize: Sizes.TEXT_SIZE_16,
             ),
-            onPressed: () {},
+            preAnimationCallback: () {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
+              }
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Processing Data')),
+              );
+            },
+            onTap: () {
+              if (domainNameController.text.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('please select a domain name')),
+                );
+                return;
+              }
+            },
           ),
         ),
       ],
