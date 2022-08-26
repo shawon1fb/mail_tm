@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'infrastructure/navigation/bindings/domains/app.data.repository.bindings.dart';
 import 'infrastructure/navigation/routes.dart';
 import 'presentation/shared/no_internet_widget/no_internet_controller.dart';
 
@@ -39,8 +40,13 @@ class Initializer {
     connect.httpClient.maxAuthRetries = 0;
 
     connect.httpClient.addRequestModifier<dynamic>(
-      (request) {
-        // debugPrint('request:=> ${request.url}');
+      (request) async{
+        try {
+          String token = await AppDataRepositoryBinding().repository.getJwtToken();
+          debugPrint(token);
+          request.headers['Authorization'] = 'Bearer $token';
+        } catch (_) {}
+
         return request;
       },
     );

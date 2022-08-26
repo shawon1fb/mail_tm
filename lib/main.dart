@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mail_tm/presentation/login/controllers/login.controller.dart';
 
+import 'infrastructure/navigation/bindings/controllers/login.controller.binding.dart';
 import 'infrastructure/navigation/bindings/domains/account.repository.bindings.dart';
 import 'infrastructure/navigation/bindings/domains/app.data.repository.bindings.dart';
 import 'infrastructure/navigation/navigation.dart';
@@ -55,12 +56,7 @@ class InitialBindings extends Bindings {
   @override
   void dependencies() {
     Get.put<InitialController>(InitialController());
-    Get.lazyPut<LoginController>(
-      () => LoginController(
-        accountRepository: AccountRepositoryBindings().repository,
-        appDataRepository: AppDataRepositoryBinding().repository,
-      ),
-    );
+    LoginControllerBinding().dependencies();
   }
 }
 

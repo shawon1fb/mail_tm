@@ -1,12 +1,16 @@
 import 'package:get/get.dart';
 
+import '../../../../domain/repository/messages/message.repository.dart';
 import '../../../../presentation/home/controllers/home.controller.dart';
+import '../domains/messages.repository.bindings.dart';
 
 class HomeControllerBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<HomeController>(
-      () => HomeController(),
+    Get.put<HomeController>(
+      HomeController(
+        messageRepository: MessagesRepositoryBindings().repository,
+      ),
     );
   }
 }

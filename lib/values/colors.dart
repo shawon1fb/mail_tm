@@ -99,4 +99,5 @@ class AppColors {
   static const Color yellow = Color(0xFFFFC702);
 
   static const Color deepBrown = Color(0xFF666D73);
+  static const Color homeAppBar = Color(0xFF002B5B);
 }
