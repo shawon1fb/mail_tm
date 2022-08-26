@@ -7,10 +7,9 @@ import '../shared/widgets/custom_shape_clippers.dart';
 import 'controllers/home.controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
-   HomeScreen({Key? key}) : super(key: key);
-  bool onCheck = false;
+  const HomeScreen({Key? key}) : super(key: key);
 
-
+  // bool onCheck = false;
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +84,9 @@ class HomeScreen extends GetView<HomeController> {
                   height: heightOfScreen * 0.05,
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: Sizes.MARGIN_20),
-                //  child: _buildForm(),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: Sizes.MARGIN_20),
+                  //  child: _buildForm(),
                 ),
               ],
             ),

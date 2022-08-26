@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../infrastructure/navigation/routes.dart';
 import '../../values/values.dart';
 import '../shared/widgets/custom_button.dart';
 import '../shared/widgets/custom_shape_clippers.dart';
@@ -11,6 +12,7 @@ import 'controllers/login.controller.dart';
 
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var heightOfScreen = MediaQuery.of(context).size.height;
@@ -25,48 +27,47 @@ class LoginScreen extends GetView<LoginController> {
             currentFocus.unfocus();
           }
         },
-        child: Container(
-          child: Stack(
-            children: <Widget>[
-              Positioned(
-                child: ClipPath(
-                  clipper: ReverseWaveShapeClipper(),
-                  child: Container(
-                    height: heightOfScreen * 0.5,
-                    width: widthOfScreen,
-                    decoration: const BoxDecoration(
-                      gradient: Gradients.curvesGradient3,
-                    ),
+        child: Stack(
+          children: <Widget>[
+            Positioned(
+              child: ClipPath(
+                clipper: ReverseWaveShapeClipper(),
+                child: Container(
+                  height: heightOfScreen * 0.5,
+                  width: widthOfScreen,
+                  decoration: const BoxDecoration(
+                    gradient: Gradients.curvesGradient3,
                   ),
                 ),
               ),
-              ListView(
-                padding: const EdgeInsets.all(Sizes.PADDING_0),
-                shrinkWrap: true,
-                children: <Widget>[
-                  SizedBox(
-                    height: heightOfScreen * 0.5 * 0.90,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: widthOfScreen * 0.15),
-                    child: Text(
-                      StringConst.LOG_IN,
-                      style: theme.textTheme.headline3?.copyWith(
-                        color: AppColors.deepBrown,
-                      ),
+            ),
+            ListView(
+              padding: const EdgeInsets.all(Sizes.PADDING_0),
+              shrinkWrap: true,
+              children: <Widget>[
+                SizedBox(
+                  height: heightOfScreen * 0.5 * 0.90,
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: widthOfScreen * 0.15),
+                  child: Text(
+                    StringConst.LOG_IN,
+                    style: theme.textTheme.headline3?.copyWith(
+                      color: AppColors.deepBrown,
                     ),
                   ),
-                  SizedBox(
-                    height: heightOfScreen * 0.05,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: Sizes.MARGIN_20),
-                    child: _buildForm(context),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                ),
+                SizedBox(
+                  height: heightOfScreen * 0.05,
+                ),
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: Sizes.MARGIN_20),
+                  child: _buildForm(context),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -100,7 +101,7 @@ class LoginScreen extends GetView<LoginController> {
           ),
           hintText: StringConst.EMAIL_HINT_TEXT,
         ),
-        SpaceH16(),
+        const SpaceH16(),
         CustomTextFormField(
           hasTitle: true,
           title: StringConst.PASSWORD,
@@ -124,8 +125,8 @@ class LoginScreen extends GetView<LoginController> {
           hintText: StringConst.PASSWORD_HINT_TEXT,
           obscured: true,
         ),
-        SpaceH20(),
-        Container(
+        const SpaceH20(),
+        SizedBox(
           width: widthOfScreen * 0.6,
           child: CustomButton(
             title: StringConst.LOG_IN_4,
@@ -142,7 +143,9 @@ class LoginScreen extends GetView<LoginController> {
           height: heightOfScreen * 0.04,
         ),
         InkWell(
-       //   onTap: () => ExtendedNavigator.root.push(Routes.signUpScreen6),
+          onTap: () {
+            Get.toNamed(Routes.SIGN_UP);
+          },
           child: RichText(
             text: TextSpan(
               children: [
@@ -165,7 +168,7 @@ class LoginScreen extends GetView<LoginController> {
             ),
           ),
         ),
-        SpaceH16(),
+        const SpaceH16(),
       ],
     );
   }

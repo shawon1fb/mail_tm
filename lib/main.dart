@@ -55,10 +55,4 @@ class InitialBindings extends Bindings {
   }
 }
 
-class InitialController extends GetxController {
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-  }
-}
+class InitialController extends GetxController {}

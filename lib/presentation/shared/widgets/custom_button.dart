@@ -4,7 +4,8 @@ import 'spaces.dart';
 import '../../../values/values.dart';
 
 class CustomButton extends StatelessWidget {
-  CustomButton({
+  const CustomButton({
+    Key? key,
     this.title,
     this.onPressed,
 //    this.width = Sizes.WIDTH_150,
@@ -16,7 +17,7 @@ class CustomButton extends StatelessWidget {
     this.textStyle,
     this.icon,
     this.hasIcon = false,
-  });
+  }) : super(key: key);
 
   final VoidCallback? onPressed;
 
@@ -48,7 +49,7 @@ class CustomButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           icon ?? Container(),
-          (icon != null) ? SpaceW8() : Container(),
+          (icon != null) ? const SpaceW8() : Container(),
           if (title != null)
             Text(
               title!,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 //************************ for root screen *********************************//
 class CustomRootScreenShapeClipper extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.lineTo(0.0, size.height * 0.5);
 
@@ -26,7 +26,7 @@ class CustomRootScreenShapeClipper extends CustomClipper<Path> {
 
 class CustomRootScreenShapeClipper2 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.moveTo(size.width * 0.3, size.height);
     path.lineTo(size.width * 0.3, size.height);
@@ -52,7 +52,7 @@ class CustomRootScreenShapeClipper2 extends CustomClipper<Path> {
 //************************ for login design 1 *********************************
 class CustomLoginShapeClipper1 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.lineTo(0.0, size.height * 0.5);
 
@@ -75,7 +75,7 @@ class CustomLoginShapeClipper1 extends CustomClipper<Path> {
 
 class CustomLoginShapeClipper2 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.lineTo(0.0, size.height * 0.85);
 
@@ -98,7 +98,7 @@ class CustomLoginShapeClipper2 extends CustomClipper<Path> {
 
 class CustomSignUpShapeClipper1 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.lineTo(0.0, size.height * 0.30);
 
@@ -121,7 +121,7 @@ class CustomSignUpShapeClipper1 extends CustomClipper<Path> {
 
 class CustomSignUpShapeClipper2 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.lineTo(0.0, size.height);
 
@@ -144,7 +144,7 @@ class CustomSignUpShapeClipper2 extends CustomClipper<Path> {
 
 class CustomSignUpShapeClipper3 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
 
     path.lineTo(0.0, size.height * 0.8);
@@ -169,7 +169,7 @@ class CustomSignUpShapeClipper3 extends CustomClipper<Path> {
 //************************ for login design 3 *********************************
 class CustomLoginShapeClipper4 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.lineTo(0.0, size.height * 0.325);
 
@@ -213,7 +213,7 @@ class CustomLoginShapeClipper4 extends CustomClipper<Path> {
 
 class CustomLoginShapeClipper5 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.lineTo(0.0, size.height * 0.3);
 
@@ -248,7 +248,7 @@ class CustomLoginShapeClipper5 extends CustomClipper<Path> {
 
 class CustomLoginShapeClipper3 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.moveTo(size.width * 0.05, size.height);
     path.lineTo(size.width, size.height);
@@ -288,7 +288,7 @@ class CustomLoginShapeClipper3 extends CustomClipper<Path> {
 
 class CustomLoginShapeClipper6 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.moveTo(size.width * 0, size.height);
     path.lineTo(size.width, size.height);
@@ -326,7 +326,7 @@ class CustomLoginShapeClipper6 extends CustomClipper<Path> {
 
 class LoginDesign4ShapeClipper extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.lineTo(0.0, size.height * 0.8);
 
@@ -374,7 +374,7 @@ class LoginDesign4ShapeClipper extends CustomClipper<Path> {
 
 class SemiCircleShapeClipper extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.moveTo(size.width * 0.1, size.height * 0.0);
 
@@ -396,7 +396,7 @@ class SemiCircleShapeClipper extends CustomClipper<Path> {
 
 class SemiCircleShapeClipper2 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.moveTo(size.width * 0.7, size.height * 0.0);
 
@@ -421,7 +421,7 @@ class SemiCircleShapeClipper2 extends CustomClipper<Path> {
 
 class WaveShapeClipper extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.lineTo(size.width * 0.0, size.height * 0.6);
 
@@ -450,7 +450,7 @@ class WaveShapeClipper extends CustomClipper<Path> {
 
 class ReverseWaveShapeClipper extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.lineTo(size.width * 0.0, size.height * 0.8);
 
@@ -481,7 +481,7 @@ class ReverseWaveShapeClipper extends CustomClipper<Path> {
 
 class LoginDesign7ShapeClipper1 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.lineTo(size.width * 0.0, size.height * 0.5);
 
@@ -503,7 +503,7 @@ class LoginDesign7ShapeClipper1 extends CustomClipper<Path> {
 
 class LoginDesign7ShapeClipper2 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.moveTo(size.width * 0.3, size.height * 0.0);
 
@@ -526,7 +526,7 @@ class LoginDesign7ShapeClipper2 extends CustomClipper<Path> {
 
 class LoginDesign7ShapeClipper3 extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     final Path path = Path();
     path.moveTo(size.width * 0.0, size.height * 0.9);
 

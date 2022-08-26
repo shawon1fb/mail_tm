@@ -69,7 +69,7 @@ class Borders {
     ),
   );
 
-  static customBorder({
+  static BorderSide customBorder({
     Color color = AppColors.blackShade10,
     double width = Sizes.WIDTH_1,
     BorderStyle style = BorderStyle.solid,
@@ -81,7 +81,7 @@ class Borders {
     );
   }
 
-  static customOutlineInputBorder({
+  static OutlineInputBorder customOutlineInputBorder({
     double borderRadius = Sizes.RADIUS_12,
     Color color = AppColors.grey,
     double width = Sizes.WIDTH_1,
@@ -98,7 +98,7 @@ class Borders {
     );
   }
 
-  static customUnderlineInputBorder({
+  static UnderlineInputBorder customUnderlineInputBorder({
     Color color = AppColors.grey,
     double width = Sizes.WIDTH_1,
     BorderStyle style = BorderStyle.solid,
