@@ -4,13 +4,15 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### dependencies
 
-A few resources to get you started if this is your first Flutter project:
+    cupertino_icons: ^1.0.2
+    flutter_screenutil: ^5.5.3+2
+    get: 4.6.5
+    get_storage: ^2.0.3
+    logger: ^1.1.0
+    connectivity_plus: ^2.2.1
+    google_fonts: ^3.0.1
+    pull_to_refresh: #^2.0.0
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
