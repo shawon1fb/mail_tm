@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../domain/core/exceptions/forbidden.exception.dart';
 import '../../infrastructure/navigation/routes.dart';
 import '../../values/values.dart';
 import '../shared/buttons/animated_button_widget.dart';
@@ -154,7 +155,38 @@ class LoginScreen extends GetView<LoginController> {
                   fontWeight: FontWeight.w700,
                   fontSize: Sizes.TEXT_SIZE_16,
                 ),
-                onTap: () {},
+                preAnimationCallback: () {
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus) {
+                    currentFocus.unfocus();
+                  }
+                },
+                onTap: () async {
+                  try {
+                    if (_formKey.currentState!.validate()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Processing Data')),
+                      );
+                      await controller.loginMethod(
+                        address: addressController.text.trim(),
+                        password: passwordController.text,
+                      );
+
+                      Get.offAllNamed(Routes.HOME);
+                    }
+                  } on ForbiddenException catch (e) {
+                    // Get.snackbar('Invalid', e.message);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(e.message)),
+                    );
+                  } catch (e, t) {
+                    debugPrint(e.toString());
+                    debugPrint(t.toString());
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('something went wrong')),
+                    );
+                  }
+                },
               ),
             ),
           ),

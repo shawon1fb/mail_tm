@@ -16,9 +16,11 @@ class AnimatedButton extends StatefulWidget {
     this.fontSize = 14,
     this.borderRadius = 25.0,
     this.backgroundColor = const Color(0xff73D1F1),
+    this.preAnimationCallback,
   }) : super(key: key);
 
   final VoidCallback? onTap;
+  final VoidCallback? preAnimationCallback;
   final String text;
   final double width;
   final double borderRadius;
@@ -62,6 +64,7 @@ class _AnimatedButtonState extends State<AnimatedButton>
     return RoundAnimationButton(
       buttonController: animationButtonController.btController,
       onTap: () async {
+        widget.preAnimationCallback?.call();
         await animationButtonController.playAnimation();
         widget.onTap?.call();
         await animationButtonController.stopAnimation();

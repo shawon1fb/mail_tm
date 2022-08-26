@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../../domain/core/exceptions/forbidden.exception.dart';
 import '../../../domain/repository/usecases/account.repository.interface.dart';
 import '../../../infrastructure/dal/services/accounts/dto/account.dto.dart';
 
@@ -22,6 +23,7 @@ class LoginController extends GetxController {
     } catch (e, t) {
       debugPrint(e.toString());
       debugPrint(t.toString());
+      rethrow;
     }
   }
 }

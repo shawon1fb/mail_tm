@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:get/get_connect/http/src/exceptions/exceptions.dart';
+
 import '../../../../domain/core/abstractions/http_connect.interface.dart';
 import '../../../../domain/core/exceptions/default.exception.dart';
+import '../../../../domain/core/exceptions/forbidden.exception.dart';
 import '../../../../domain/core/exceptions/unprocessable.entity.exception.dart';
 import '../../usecase/account.services.interface.dart';
 import 'dto/account.dto.dart';
@@ -81,8 +84,13 @@ class AccountNetworkService extends IAccountService {
         switch (response.statusCode) {
           case 422:
             throw UbProcessAbleEntityException(
-                message:
-                    response.payload?.message ?? 'UbProcessAbleEntityException');
+                message: response.payload?.message ??
+                    'UbProcessAbleEntityException');
+          case 401:
+            throw ForbiddenException(
+              message:
+                  response.payload?.message ?? 'invalid username or password',
+            );
           case 500:
             throw DefaultException(
               message: response.payload?.message ?? 'Server error',
