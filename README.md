@@ -22,6 +22,6 @@ A new Flutter project.
     flutter build apk --release
 
 ### screenshot
-![alt text](https://drive.google.com/file/d/1PXv7yHTf5jyxXTuLt7T07OgLyunyG_6D/view)
-![alt text](https://drive.google.com/file/d/1PIH4w-h8sTfuG85SkpYzgeuyDRk7Pe8I/view)
-![alt text](https://drive.google.com/file/d/1PZw0j6LiK2T2q5lH2BUxoKwuov64Esj4/view)
+![alt text](https://raw.githubusercontent.com/shawon1fb/mail_tm/master/screenshot/Screenshot_2022-08-26-16-30-07-39_a70764226f31b3a5296c9174087ba0bc.jpg)
+![alt text](https://raw.githubusercontent.com/shawon1fb/mail_tm/master/screenshot/Screenshot_2022-08-26-16-30-12-73_a70764226f31b3a5296c9174087ba0bc.jpg)
+![alt text](https://raw.githubusercontent.com/shawon1fb/mail_tm/master/screenshot/Screenshot_2022-08-26-16-30-00-31_a70764226f31b3a5296c9174087ba0bc.jpg)
