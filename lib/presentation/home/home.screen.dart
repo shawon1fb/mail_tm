@@ -49,7 +49,7 @@ class HomeScreen extends GetView<HomeController> {
         width: 80,
         child: Center(
           child: AnimatedNextButton(
-           iconData: Icons.refresh,
+            iconData: Icons.refresh,
             color: AppColors.lightBlueShade2,
             onTap: () async {
               buttonController.startAnimation();
@@ -74,14 +74,12 @@ class HomeScreen extends GetView<HomeController> {
               return RefreshScroll(
                 scrollController: scrollController,
                 child: ListView.builder(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                   controller: scrollController,
                   itemCount: logic.messages.length,
                   itemBuilder: (context, i) {
                     return MessagesCard(item: logic.messages[i]);
                   },
-                ),
+                ).paddingSymmetric(horizontal: 15, vertical: 20),
               );
             },
           ),
